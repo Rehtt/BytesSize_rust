@@ -1,3 +1,45 @@
+/// BytesSize 可以计算字节单位
+///
+/// # 例如：
+/// #[cfg(test)]
+// mod tests {
+//     use std::ops::Sub;
+//     use crate::size::{add, ByteSize, ByteSizeUnit};
+//     use std::str::FromStr;
+//     use super::*;
+//
+//     #[test]
+//     fn parse() {
+//         assert_eq!(ByteSize::from_str("12.3 PB").unwrap().to_size(), ByteSize::pb(12.3).to_size());
+//         assert_eq!(ByteSize::from_str("12.3 TB").unwrap().to_size(), ByteSize::tb(12.3).to_size());
+//         assert_eq!(ByteSize::from_str("12.3 GB").unwrap().to_size(), ByteSize::gb(12.3).to_size());
+//         assert_eq!(ByteSize::from_str("12.3 MB").unwrap().to_size(), ByteSize::mb(12.3).to_size());
+//         assert_eq!(ByteSize::from_str("12.3 KB").unwrap().to_size(), ByteSize::kb(12.3).to_size());
+//
+//         assert_eq!(ByteSize::from_str("12.3 PiB").unwrap().to_size(), ByteSize::pib(12.3).to_size());
+//         assert_eq!(ByteSize::from_str("12.3 TiB").unwrap().to_size(), ByteSize::tib(12.3).to_size());
+//         assert_eq!(ByteSize::from_str("12.3 GiB").unwrap().to_size(), ByteSize::gib(12.3).to_size());
+//         assert_eq!(ByteSize::from_str("12.3 MiB").unwrap().to_size(), ByteSize::mib(12.3).to_size());
+//         assert_eq!(ByteSize::from_str("12.3 KiB").unwrap().to_size(), ByteSize::kib(12.3).to_size());
+//
+//         assert_eq!("12.3 PB",ByteSize::pb(12.3).to_pb().to_string())
+//     }
+//
+//     #[test]
+//     fn convert() {
+//         assert_eq!(ByteSize::from_str("12.3 PB").unwrap().to_tb().to_string(), ByteSize::pb(12.3).to_tb().to_string());
+//         // ...
+//     }
+//
+//     #[test]
+//     fn calculate(){
+//         let a=ByteSize::gb(2.0);
+//         let b=ByteSize::mb(1000.0);
+//         assert_eq!(add(a,b).unwrap().to_size(),ByteSize::gb(3.0).to_size())
+//     }
+// }
+
+
 use std::ops::Add;
 use std::str::FromStr;
 
@@ -263,12 +305,39 @@ impl ByteSizeUnit {
         };
         ByteSize(num)
     }
-    pub fn add(&self, a: Self) -> Option<ByteSize> {
-        let s=self.to_bytes_size().to_size().checked_add(a.to_bytes_size().to_size())?;
+}
+
+pub trait Calculate {
+    fn add(&self, a: Self) -> Option<ByteSize>;
+    fn sub(&self, r: Self) -> Option<ByteSize>;
+}
+
+pub fn add<T: Calculate>(s: T, a: T) -> Option<ByteSize> {
+    return s.add(a);
+}
+
+pub fn sub<T: Calculate>(s: T, a: T) -> Option<ByteSize> {
+    return s.add(a);
+}
+
+impl Calculate for ByteSizeUnit {
+    fn add(&self, a: Self) -> Option<ByteSize> {
+        let s = self.to_bytes_size().to_size().checked_add(a.to_bytes_size().to_size())?;
         Some(ByteSize(s))
     }
-    pub fn sub(&self, r: Self) -> Option<ByteSize> {
-        let s=self.to_bytes_size().to_size().checked_sub(r.to_bytes_size().to_size())?;
+    fn sub(&self, r: Self) -> Option<ByteSize> {
+        let s = self.to_bytes_size().to_size().checked_sub(r.to_bytes_size().to_size())?;
+        Some(ByteSize(s))
+    }
+}
+
+impl Calculate for ByteSize {
+    fn add(&self, a: Self) -> Option<ByteSize> {
+        let s = self.to_size().checked_add(a.to_size())?;
+        Some(ByteSize(s))
+    }
+    fn sub(&self, r: Self) -> Option<ByteSize> {
+        let s = self.to_size().checked_sub(r.to_size())?;
         Some(ByteSize(s))
     }
 }

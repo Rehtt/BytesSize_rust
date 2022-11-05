@@ -4,7 +4,7 @@ mod size;
 #[cfg(test)]
 mod tests {
     use std::ops::Sub;
-    use crate::size::{ByteSize, ByteSizeUnit};
+    use crate::size::{add, ByteSize, ByteSizeUnit};
     use std::str::FromStr;
     use super::*;
 
@@ -29,5 +29,12 @@ mod tests {
     fn convert() {
         assert_eq!(ByteSize::from_str("12.3 PB").unwrap().to_tb().to_string(), ByteSize::pb(12.3).to_tb().to_string());
         // ...
+    }
+
+    #[test]
+    fn calculate(){
+        let a=ByteSize::gb(2.0);
+        let b=ByteSize::mb(1000.0);
+        assert_eq!(add(a,b).unwrap().to_size(),ByteSize::gb(3.0).to_size())
     }
 }
