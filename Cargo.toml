@@ -1,7 +1,12 @@
 [package]
-name = "BytesZise"
+name = "bytes_size"
 version = "0.1.0"
 edition = "2021"
+description = "一个解析、计算字节单位的库"
+license = "MIT"
+documentation = "https://docs.rs/bytes_size"
+homepage = "https://github.com/Rehtt/BytesSize_rust"
+repository = "https://github.com/Rehtt/BytesSize_rust"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
