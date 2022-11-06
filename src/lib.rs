@@ -1,10 +1,13 @@
 mod size;
 
+/// # ByteSize
+#[derive(Copy, Clone, PartialEq, PartialOrd, Eq, Ord, Hash, Default)]
+pub struct ByteSize(u64);
 
 #[cfg(test)]
 mod tests {
     use std::ops::Sub;
-    use crate::size::{add, ByteSize, ByteSizeUnit};
+    use crate::size::{add, ByteSizeUnit};
     use std::str::FromStr;
     use super::*;
 

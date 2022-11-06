@@ -42,9 +42,8 @@
 
 use std::ops::Add;
 use std::str::FromStr;
+use crate::ByteSize;
 
-/// # ByteSize
-pub struct ByteSize(u64);
 
 const B: u64 = 1;
 const KB: u64 = 1000;
