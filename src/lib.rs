@@ -43,7 +43,7 @@
 mod size;
 
 /// # ByteSize
-#[derive(Copy, Clone, PartialEq, PartialOrd, Eq, Ord, Hash, Default)]
+#[derive(Debug,Copy, Clone, PartialEq, PartialOrd, Eq, Ord, Hash, Default)]
 pub struct ByteSize(u64);
 
 const B: u64 = 1;
