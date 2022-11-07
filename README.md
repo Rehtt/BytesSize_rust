@@ -41,7 +41,7 @@ mod tests {
 ```
 
 # Record
-> 0.1.1-fix 添加Debug属性
+> 0.1.2 添加Debug属性
 
 > 0.1.1 调整文件结构，修复一些bug
 

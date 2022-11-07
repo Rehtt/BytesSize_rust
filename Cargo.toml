@@ -1,6 +1,6 @@
 [package]
 name = "bytes_size"
-version = "0.1.1-fix"
+version = "0.1.2"
 edition = "2021"
 description = "一个解析、计算字节单位的库"
 license = "MIT"
